@@ -3,6 +3,7 @@ import Profile from './src/screens/profile/Profile';
 
 export default function App() {
   return (
-    <Login/>
+    // <Login/>
+    <Profile/>
   )
 }

@@ -1,6 +1,6 @@
 
 import { StatusBar } from 'expo-status-bar';
-import {Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import {Button, Image, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function Login() {
 
@@ -16,7 +16,7 @@ return(
   </View>
 
   <View>
-  <Text style={styles.TextInput}>Email2</Text>
+  <Text style={styles.TextInput}>Email</Text>
   <TextInput
     style={styles.input}
     placeholder="SeuEmail@gmail.com"
@@ -70,13 +70,12 @@ input: {
 width: 260,
 borderRadius: 20,
 borderColor:'#FAFAFA',
-height: 40,
+height: 60,
 borderWidth: 1,
 padding: 10,
 marginTop:10,
 marginBottom: 10,
 backgroundColor: '#FAFAFA'
-
 },
 Bt:{
 marginTop: 40,
