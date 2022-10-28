@@ -1,5 +1,6 @@
 import { View, Text, Image, StyleSheet, TextInput, ScrollView, Button} from "react-native";
 import { StatusBar } from 'expo-status-bar';
+import { AntDesign } from '@expo/vector-icons';
 
 export default function Profile() {
     return(
@@ -7,9 +8,12 @@ export default function Profile() {
         <ScrollView>
         <View style={styles.container}>
             <View style={styles.container2}>
+                <AntDesign name="arrowleft" size={24} color="#676767" />
                 <Text style={styles.Text}>Registre-se de Graça</Text>
-                <Image style={styles.Logo} source={require('../../../assets/profile.png')} />
             <StatusBar style="auto" />
+            </View>
+            <View>
+            <Image style={styles.Logo} source={require('../../../assets/profile.png')} />
             </View>
             <View>
                 <View>
@@ -21,7 +25,7 @@ export default function Profile() {
                     style={styles.input}
                     placeholder="Digite seu primeiro nome"
                 />
-                </View>
+                </View> 
                 <View>
                     <Text style={styles.TextInput}>Sobrenome</Text>
                     <TextInput
@@ -73,12 +77,14 @@ const styles = StyleSheet.create({
         marginTop: 60,
     },
     container2:{
-        alignItems: 'center',
+        flexDirection: 'row',
+        // justifyContent: 'space-between',
     },
     Text:{
         marginBottom: 50,
         color: '#283361',
         fontSize: 25,
+        marginLeft: 20, // Temporário | Problema com space-between.
     },
     TextInput: {
         fontSize: 16,
