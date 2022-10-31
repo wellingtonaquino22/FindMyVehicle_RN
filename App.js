@@ -5,8 +5,8 @@ import Home from './src/screens/home_/Home';
 export default function App() {
   return (
     // <Login/>
-    // <Profile/>
-    <Home/>
+    <Profile/>
+    // <Home/>
 
   )
 }
