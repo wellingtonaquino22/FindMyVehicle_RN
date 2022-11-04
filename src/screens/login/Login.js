@@ -1,8 +1,31 @@
 
 import { StatusBar } from 'expo-status-bar';
 import {Button, Image, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+// import server from '../../server/server'
 
 export default function Login() {
+
+  const getdata = ()=>{
+    const fetchbody ={
+      "variable": "temperatura",
+      "value": "67",
+      "umidade": "umidade",
+      "valor": 100
+  }
+  fetch('https://api.tago.io/data', {   
+    method: 'POST',  
+    body: JSON.stringify(fetchbody),
+    headers: {'Content-type': 'application/json; charset=UTF-8',
+            'Device-Token': 'a381b1c3-f8ed-42bc-9273-81ead8afcf7f'
+    },})  
+    .then((response) => response.json())  
+    .then((json) => console.log(json))
+
+  //   request(options, function (error, response) {
+  //     if (error) throw new Error(error);
+  //     console.log(response.body);
+  // })
+    }
 
 return(
     <>
@@ -27,7 +50,10 @@ return(
     placeholder="********************"
   />
   <View style={styles.Bt}>
-  <Button 
+  <Button
+    onPress={() => {
+      getdata()
+    }}
   title='Continuar'
   color={'#19295A'}/>
   </View>
