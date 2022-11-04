@@ -24,7 +24,4 @@ const styles = StyleSheet.create({
         width: 80,
         height: 80,
     },
-    bt:{
-        width: 50,
-    }
 })
