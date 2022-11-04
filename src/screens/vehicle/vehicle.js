@@ -1,4 +1,5 @@
-import {Text, View, StyleSheet, Image, Button} from 'react-native'
+import {Text, View, StyleSheet, Image} from 'react-native'
+import { Button } from 'react-native-elements';
 
 export default function Vehicle(){
     return (
@@ -7,7 +8,6 @@ export default function Vehicle(){
             <Image style={styles.imgprofile} source={require('../../../assets/profile.png')}/>
             <Text>Jon Snow</Text>
             <Text>2 veículos</Text>
-            <Button style={styles.bt}title='Veiculo'/>
         </View>
         </View>
     )
