@@ -8,7 +8,7 @@ import {SourceSansPro_700Bold, SourceSansPro_300Light} from "@expo-google-fonts/
 import {Ionicons} from '@expo/vector-icons'
 
 
-export default function Login() {
+export default function Login({navigation}) {
 
     const [font] = useFonts({
         Poppins_700Bold, SourceSansPro_700Bold, SourceSansPro_300Light
@@ -23,12 +23,17 @@ export default function Login() {
 
     return (
         <>
-            <ScrollView>
+            <ScrollView style={styles.body}>
                 <StatusBar style='auto'/>
                 <View style={styles.loginArea}>
                     <View style={[styles.loginSpaceBetween, {alignItems: 'flex-start'}]}>
                         <TouchableOpacity>
-                            <Ionicons name={'arrow-back'} color={'#B0B0B0'} size={30}/>
+                            <Ionicons
+                                name={'arrow-back'}
+                                color={'#B0B0B0'}
+                                size={30}
+                                onPress={() => navigation.goBack()}
+                            />
                         </TouchableOpacity>
                     </View>
                     <View style={[styles.loginSpaceBetween, {alignItems: 'center'}]}>
@@ -79,17 +84,23 @@ export default function Login() {
                                 buttonStyle={styles.button}
                                 title='Continuar'
                                 titleStyle={styles.buttonTitle}
+                                onPress={() => navigation.navigate('Home')}
                             />
                         </View>
                     </View>
                 </View>
             </ScrollView>
-            <Text style={styles.TextVersion}>v1.0</Text>
+            <View style={styles.body}>
+                <Text style={styles.appVersion}>v1.0</Text>
+            </View>
         </>
     );
 }
 
 const styles = StyleSheet.create({
+    body: {
+        backgroundColor: '#FFF'
+    },
     logo: {
         marginTop: 80,
         width: 104,
@@ -178,7 +189,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
         color: '#fff'
     },
-    TextVersion: {
+    appVersion: {
         color: '#192959',
         alignSelf: 'center',
         marginBottom: 10

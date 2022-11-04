@@ -4,8 +4,10 @@ import {Button} from "react-native-elements";
 import {useFonts} from "expo-font";
 import {Poppins_700Bold} from "@expo-google-fonts/poppins";
 import {SourceSansPro_300Light, SourceSansPro_700Bold} from "@expo-google-fonts/source-sans-pro";
+import Login from "../login/Login";
+import {Link} from "@react-navigation/native";
 
-export default function Home() {
+export default function Home({navigation}) {
 
     const [font] = useFonts({
         Poppins_700Bold, SourceSansPro_700Bold, SourceSansPro_300Light
@@ -35,10 +37,14 @@ export default function Home() {
                             buttonStyle={styles.button}
                             title='Entrar'
                             titleStyle={styles.buttonTitle}
+                            onPress={() => navigation.navigate('Login')}
                         />
                     </View>
                     <View>
-                        <Text style={styles.register}>Registrar-se</Text>
+                        <Text
+                            style={styles.register}
+                            onPress={() => navigation.navigate('Register')}
+                        >Registrar-se</Text>
                     </View>
                 </View>
             </View>
@@ -50,6 +56,7 @@ export default function Home() {
 const styles = StyleSheet.create({
     view: {
         height: '100%',
+        backgroundColor: '#fff'
     },
     background: {
         position: 'absolute',
