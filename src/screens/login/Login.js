@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Alert, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {StatusBar} from 'expo-status-bar';
 import {useFonts} from "expo-font";
@@ -14,7 +14,16 @@ export default function Login({navigation}) {
         Poppins_700Bold, SourceSansPro_700Bold, SourceSansPro_300Light
     })
 
-    const [passwd, setPasswd] = useState('')
+    const [user, setUser] = useState()
+    const [passwd, setPasswd] = useState()
+
+    const userLogin = () => {
+        if(user && passwd != '' && user === 'admin' && passwd === 'admin') {
+            navigation.navigate('Home')
+        } else {
+            Alert.alert('Permissão negada!', 'E-mail ou senha inválidos. Verique e tente novamente.')
+        }
+    }
     const [hidePasswd, setHidePasswd] = useState(true)
 
     if (!font) {
@@ -56,6 +65,7 @@ export default function Login({navigation}) {
                                 style={styles.input}
                                 placeholder="seuemail@mail.com"
                                 placeholderTextColor={'#B0B0B0'}
+                                onChangeText={(txt) => setUser(txt)}
                             />
                             <TouchableOpacity style={styles.inputIcon}>
                                 <Ionicons name={'mail'} color={'#B0B0B0'} size={25}/>
@@ -68,7 +78,7 @@ export default function Login({navigation}) {
                                 placeholder="********************"
                                 placeholderTextColor={'#B0B0B0'}
                                 textContentType={"password"}
-                                onChange={(txt) => setPasswd(txt)}
+                                onChangeText={(txt) => setPasswd(txt)}
                                 secureTextEntry={hidePasswd}
                             />
                             <TouchableOpacity style={styles.inputIcon} onPress={() => setHidePasswd(!hidePasswd)}>
@@ -84,7 +94,7 @@ export default function Login({navigation}) {
                                 buttonStyle={styles.button}
                                 title='Continuar'
                                 titleStyle={styles.buttonTitle}
-                                onPress={() => navigation.navigate('Home')}
+                                onPress={userLogin}
                             />
                         </View>
                     </View>
