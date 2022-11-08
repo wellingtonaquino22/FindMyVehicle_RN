@@ -4,20 +4,25 @@ import React, {useState, useEffect} from "react";
 import MapView, {Marker, MarkerAnimated} from "react-native-maps";
 import * as Location from "expo-location";
 import {Ionicons} from "@expo/vector-icons";
-import {useFonts, SourceSansPro_700Bold, SourceSansPro_300Light} from "@expo-google-fonts/source-sans-pro";
-import {useIsFocused} from "@react-navigation/core";
+import {
+    useFonts,
+    SourceSansPro_700Bold,
+    SourceSansPro_400Regular,
+    SourceSansPro_300Light
+} from "@expo-google-fonts/source-sans-pro";
 
-const {width, height} = Dimensions.get('window')
+const {width, height} = Dimensions.get('screen')
 
-export default function Home() {
+export default function Home({navigation}) {
 
     const [font, setFont] = useFonts({
-        SourceSansPro_700Bold, SourceSansPro_300Light
+        SourceSansPro_700Bold, SourceSansPro_400Regular, SourceSansPro_300Light
     })
     const [region, setRegion] = useState(null)
 
     useEffect(() => {
         getMyLocation()
+        console.log('\n\nScreen dimensions: \n\n- width: ' + width + '\n- height: ' + height + '\n\n')
     }, [])
 
     async function getMyLocation() {
@@ -67,7 +72,9 @@ export default function Home() {
         <View style={styles.container}>
             <View style={styles.container2}>
                 <View style={styles.content}>
-                    <Image style={styles.imgProfile} source={require('../../../assets/user.png')}/>
+                    <View style={styles.profile}>
+                        <Image style={styles.imgProfile} source={require('../../../assets/user.png')}/>
+                    </View>
                     <View>
                         <Text
                             style={
@@ -76,12 +83,12 @@ export default function Home() {
                                     fontSize: 21,
                                     color: '#192959'
                                 }
-                            }>Jon Snow
+                            }>User Name
                         </Text>
                         <Text
                             style={
                                 {
-                                    fontFamily: 'SourceSansPro_300Light',
+                                    fontFamily: 'SourceSansPro_400Regular',
                                     fontSize: 16,
                                     color: '#777'
                                 }
@@ -91,7 +98,8 @@ export default function Home() {
                     </View>
                 </View>
                 <View style={[styles.content, {justifyContent: 'flex-end'}]}>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => navigation.openDrawer()}>
                         <View style={styles.menu}>
                             <Ionicons name={'menu'} color={'#BBB'} size={25}/>
                         </View>
@@ -104,7 +112,7 @@ export default function Home() {
                     title='Toyota, Corolla - BRA2E19'
                     titleStyle={{
                         color: '#192959',
-                        fontFamily: 'SourceSansPro_700Bold',
+                        fontFamily: 'SourceSansPro_400Regular',
                     }}
                     onPress={() => {
                         setRegion({
@@ -122,7 +130,7 @@ export default function Home() {
                     title='CB Twister - BRC3TR1'
                     titleStyle={{
                         color: '#192959',
-                        fontFamily: 'SourceSansPro_700Bold',
+                        fontFamily: 'SourceSansPro_400Regular',
                     }}
                     onPress={() => {
                         setRegion({
@@ -147,8 +155,8 @@ export default function Home() {
                         : ''
                 }}
                 style={{
-                    width: width,
-                    height: height,
+                    width: '100%',
+                    height: '82.2%',
                 }}
                 region={region}
                 zoomEnabled={true}
@@ -164,19 +172,19 @@ export default function Home() {
                     title='Teste'
                     description='Descrição do local'
                     icon={{
-                        uri: "https://img.icons8.com/plasticine/1x/truck.png"
+                        uri: "https://img.icons8.com/plasticine/1x/car.png"
                     }}
                 />
                 <Marker
-                    focusable={true}
                     coordinate={{
                         latitude: -8.1186496,
                         longitude: -35.2910706,
                     }}
+                    focusable={true}
                     title='Teste'
                     description='Descrição do local'
                     icon={{
-                        uri: "https://img.icons8.com/plasticine/1x/truck.png"
+                        uri: "https://img.icons8.com/plasticine/1x/car.png"
                     }}
                 />
             </MapView>
@@ -190,13 +198,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     container2: {
+        // backgroundColor: '#eee',
         width: '90%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
 
         marginTop: 45,
-        marginBottom: 10,
     },
     container3: {
         backgroundColor: 'green'
@@ -207,19 +215,39 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
+    profile: {
+        width: 62,
+        height: 62,
+
+        alignItems: 'center',
+        justifyContent: 'center',
+
+        borderRadius: 30,
+
+        marginRight: 13,
+
+        shadowColor: "#777",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+
+        elevation: 9,
+    },
     imgProfile: {
         width: 60,
         height: 60,
-
-        borderRadius: 30,
-        borderWidth: 0.3,
-        borderColor: '#BBB',
-
-        marginRight: 13
     },
     bt: {
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+
+        width: '100%',
+        height: 55,
+
 
         borderBottomColor: '#BBB',
         borderBottomWidth: 0.4
@@ -227,24 +255,32 @@ const styles = StyleSheet.create({
     menu: {
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#fff',
 
         width: 40,
         height: 40,
         color: '#BBB',
 
         borderRadius: 50,
-        borderWidth: 0.1,
+
+        shadowColor: "#777",
+        shadowOffset: {
+            width: 0,
+            height: 9,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 10.24,
+        elevation: 13
     },
     vehicle: {
         height: 35,
         width: 176,
-        marginHorizontal: 5,
-        marginBottom: 10,
+        marginLeft: 20,
 
         borderRadius: 50,
         borderWidth: 0.2,
         borderColor: '#BBB',
 
-        backgroundColor: '#fafafa',
+        backgroundColor: '#fbfbfb',
     }
 })
