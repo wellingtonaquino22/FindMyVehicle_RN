@@ -1,7 +1,7 @@
 import {View, StyleSheet, Platform, PermissionsAndroid, Dimensions, Text, Image, TouchableOpacity} from "react-native";
 import {Button} from "react-native-elements"
 import React, {useState, useEffect} from "react";
-import MapView, {Marker, MarkerAnimated} from "react-native-maps";
+import MapView, {Marker} from "react-native-maps";
 import * as Location from "expo-location";
 import {Ionicons} from "@expo/vector-icons";
 import {
@@ -10,6 +10,7 @@ import {
     SourceSansPro_400Regular,
     SourceSansPro_300Light
 } from "@expo-google-fonts/source-sans-pro";
+import {sendData} from '../../service/server'
 
 const {width, height} = Dimensions.get('screen')
 
@@ -19,15 +20,16 @@ export default function Home({navigation}) {
         SourceSansPro_700Bold, SourceSansPro_400Regular, SourceSansPro_300Light
     })
     const [region, setRegion] = useState(null)
+    const [vehicleName, setVehicleName] = useState(null)
 
     useEffect(() => {
         getMyLocation()
-        console.log('\n\nScreen dimensions: \n\n- width: ' + width + '\n- height: ' + height + '\n\n')
+            .then(response => console.log({"status": response}))
+            .catch(error => console.log({"error": error}))
     }, [])
 
     async function getMyLocation() {
         let location = await Location.getCurrentPositionAsync({})
-        console.log(location)
 
         setRegion({
             latitude: location.coords.latitude,
@@ -36,32 +38,7 @@ export default function Home({navigation}) {
             longitudeDelta: 0.0421
         })
 
-    }
-
-    async function sendData() {
-        const fetchBody = {region}
-        const response = await fetch('https://api.tago.io/data', {
-            method: 'POST',
-            body: JSON.stringify(fetchBody),
-            headers: {
-                'Content-Type': 'application/json',
-                'Device-Token': 'ccf64fb8-c91b-43b5-900e-5356a05fdd2f'
-            },
-        })
-        const json = await response.json()
-        console.log(json)
-    }
-
-    async function handleMonitor() {
-        const response = await fetch('https://api.tago.io/data/', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Device-Token': 'ccf64fb8-c91b-43b5-900e-5356a05fdd2f'
-            }
-        })
-        const json = await response.json()
-        console.log(json)
+        return location ? 200 : 404
     }
 
     if (!font) {
@@ -115,14 +92,17 @@ export default function Home({navigation}) {
                         fontFamily: 'SourceSansPro_400Regular',
                     }}
                     onPress={() => {
+                        setVehicleName('Toyota, Corolla - BRA2E19')
                         setRegion({
                             latitude: -8.109173,
                             longitude: -35.287119,
                             latitudeDelta: 0.0922,
                             longitudeDelta: 0.0421
                         })
-                        sendData()
-                        handleMonitor()
+                    }}
+                    onPressOut={() => {
+                        sendData(region['latitude'], region['longitude'], vehicleName)
+                            .catch(error => console.log({"error": error}))
                     }}
                 />
                 <Button
@@ -133,14 +113,17 @@ export default function Home({navigation}) {
                         fontFamily: 'SourceSansPro_400Regular',
                     }}
                     onPress={() => {
+                        setVehicleName('CB Twister - BRC3TR1')
                         setRegion({
                             latitude: -8.1186496,
                             longitude: -35.2910706,
                             latitudeDelta: 0.0922,
                             longitudeDelta: 0.0421
                         })
-                        sendData()
-                        handleMonitor()
+                    }}
+                    onPressOut={() => {
+                        sendData(region['latitude'], region['longitude'], vehicleName)
+                            .catch(error => console.log({"error": error}))
                     }}
                 />
             </View>
@@ -155,7 +138,7 @@ export default function Home({navigation}) {
                         : ''
                 }}
                 style={{
-                    width: '100%',
+                    width: width,
                     height: '82.2%',
                 }}
                 region={region}
@@ -169,7 +152,7 @@ export default function Home({navigation}) {
                         latitude: -8.109173,
                         longitude: -35.287119,
                     }}
-                    title='Teste'
+                    title={vehicleName}
                     description='Descrição do local'
                     icon={{
                         uri: "https://img.icons8.com/plasticine/1x/car.png"
@@ -181,7 +164,7 @@ export default function Home({navigation}) {
                         longitude: -35.2910706,
                     }}
                     focusable={true}
-                    title='Teste'
+                    title={vehicleName}
                     description='Descrição do local'
                     icon={{
                         uri: "https://img.icons8.com/plasticine/1x/car.png"

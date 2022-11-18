@@ -7,22 +7,16 @@ import Home from "./src/screens/home/Home";
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer'
+import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
 import {Ionicons} from "@expo/vector-icons";
 import {useFonts, SourceSansPro_300Light, SourceSansPro_700Bold} from "@expo-google-fonts/source-sans-pro";
-import {Alert, View} from "react-native";
+import WelcomeScreen from "./src/screens/welcome/WelcomeScreen";
+import InfoScreen1 from "./src/screens/welcome/InfoScreen1";
+import InfoScreen2 from "./src/screens/welcome/InfoScreen2";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator()
-
-// export function alert() {
-//     return (
-//         <View>
-//             <Alert>
-//                 {Alert.alert('Você está saindo do app', 'Tem certeza?', ["Não", "Sim"], {cancelable: true})}
-//             </Alert>
-//         </View>
-//     )
-// }
+const Transition = createAnimatedSwitchNavigator();
 
 export function MenuDrawer() {
 
@@ -81,29 +75,57 @@ export function MenuDrawer() {
     )
 }
 
+export function WelcomeDrawer() {
+    return (
+        <Stack.Navigator
+            initialRouteName={WelcomeScreen}
+            screenOptions={{
+                headerShown: false,
+                swipeEnabled: true
+            }}
+        >
+            <Stack.Screen
+                name={"WelcomeScreen"}
+                component={WelcomeScreen}
+                options={{
+
+                }}
+            />
+            <Stack.Screen
+                name={"InfoScreen1"}
+                component={InfoScreen1}
+            />
+            <Stack.Screen
+                name={"InfoScreen2"}
+                component={InfoScreen2}
+            />
+        </Stack.Navigator>
+    )
+}
+
 export default function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName={Main}>
+            <Stack.Navigator initialRouteName={Main} screenOptions={{headerShown: false}}>
+                <Stack.Screen
+                    name={"WelcomeDrawer"}
+                    component={WelcomeDrawer}
+                />
                 <Stack.Screen
                     name="Main"
                     component={Main}
-                    options={{headerShown: false}}
                 />
                 <Stack.Screen
                     name="Login"
                     component={Login}
-                    options={{headerShown: false}}
                 />
                 <Stack.Screen
                     name="Register"
                     component={Profile}
-                    options={{headerShown: false}}
                 />
                 <Stack.Screen
                     name="Home"
                     component={MenuDrawer}
-                    options={{headerShown: false}}
                 />
             </Stack.Navigator>
         </NavigationContainer>
