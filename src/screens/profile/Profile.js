@@ -2,8 +2,8 @@ import {View, Text, Image, StyleSheet, TextInput, ScrollView, TouchableOpacity} 
 import {Button} from "react-native-elements"
 import {StatusBar} from 'expo-status-bar';
 import {useFonts} from "expo-font";
-import {Poppins_700Bold} from "@expo-google-fonts/poppins";
 import {SourceSansPro_300Light, SourceSansPro_700Bold} from "@expo-google-fonts/source-sans-pro";
+import {Poppins_700Bold} from "@expo-google-fonts/poppins";
 import React, {useState} from "react";
 import {Ionicons} from "@expo/vector-icons";
 

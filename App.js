@@ -5,18 +5,14 @@ import Main from './src/screens/main/Main';
 import Profile from "./src/screens/profile/Profile";
 import Home from "./src/screens/home/Home";
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer'
-import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
 import {Ionicons} from "@expo/vector-icons";
 import {useFonts, SourceSansPro_300Light, SourceSansPro_700Bold} from "@expo-google-fonts/source-sans-pro";
-import WelcomeScreen from "./src/screens/welcome/WelcomeScreen";
-import InfoScreen1 from "./src/screens/welcome/InfoScreen1";
-import InfoScreen2 from "./src/screens/welcome/InfoScreen2";
+import InfoView from "./src/screens/welcome/InfoView";
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator()
-const Transition = createAnimatedSwitchNavigator();
 
 export function MenuDrawer() {
 
@@ -65,51 +61,28 @@ export function MenuDrawer() {
                                 size={20}
                                 color={'#777'}
                             />
-                        ),
+                        )
                     }
                 }
                 name="Logout"
-                component={Home}
+                component={Main}
             />
         </Drawer.Navigator>
-    )
-}
-
-export function WelcomeDrawer() {
-    return (
-        <Stack.Navigator
-            initialRouteName={WelcomeScreen}
-            screenOptions={{
-                headerShown: false,
-                swipeEnabled: true
-            }}
-        >
-            <Stack.Screen
-                name={"WelcomeScreen"}
-                component={WelcomeScreen}
-                options={{
-
-                }}
-            />
-            <Stack.Screen
-                name={"InfoScreen1"}
-                component={InfoScreen1}
-            />
-            <Stack.Screen
-                name={"InfoScreen2"}
-                component={InfoScreen2}
-            />
-        </Stack.Navigator>
     )
 }
 
 export default function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName={Main} screenOptions={{headerShown: false}}>
+            <Stack.Navigator
+                initialRouteName={Main}
+                screenOptions={{
+                    headerShown: false
+                }}
+            >
                 <Stack.Screen
-                    name={"WelcomeDrawer"}
-                    component={WelcomeDrawer}
+                    name={"InfoView"}
+                    component={InfoView}
                 />
                 <Stack.Screen
                     name="Main"

@@ -4,18 +4,21 @@ import {Button} from 'react-native-elements';
 import {StatusBar} from 'expo-status-bar';
 import {useFonts} from "expo-font";
 import {Poppins_700Bold} from "@expo-google-fonts/poppins";
-import {SourceSansPro_700Bold, SourceSansPro_300Light} from "@expo-google-fonts/source-sans-pro";
+import {SourceSansPro_700Bold, SourceSansPro_300Light, SourceSansPro_300Light_Italic} from "@expo-google-fonts/source-sans-pro";
 import {Ionicons} from '@expo/vector-icons'
 
 
 export default function Login({navigation}) {
 
     const [font] = useFonts({
-        Poppins_700Bold, SourceSansPro_700Bold, SourceSansPro_300Light
+        Poppins_700Bold, SourceSansPro_700Bold, SourceSansPro_300Light, SourceSansPro_300Light_Italic
     })
 
     const [user, setUser] = useState()
     const [passwd, setPasswd] = useState()
+
+    const [userHolder, setUserHolder] = useState("exemplo@mail.com")
+    const [passwdHolder, setPasswdHolder] = useState("Digite sua senha")
 
     const userLogin = () => {
         if(user && passwd != '' && user === 'admin' && passwd === 'admin') {
@@ -25,7 +28,7 @@ export default function Login({navigation}) {
         }
     }
     const [hidePasswd, setHidePasswd] = useState(true)
-
+"Digite sua senha"
     if (!font) {
         return null
     }
@@ -63,7 +66,7 @@ export default function Login({navigation}) {
                         <View style={styles.inputArea}>
                             <TextInput
                                 style={styles.input}
-                                placeholder="seuemail@mail.com"
+                                placeholder={"exemplo@mail.com"}
                                 placeholderTextColor={'#B0B0B0'}
                                 onChangeText={(txt) => setUser(txt)}
                             />
@@ -75,11 +78,11 @@ export default function Login({navigation}) {
                         <View style={styles.inputArea}>
                             <TextInput
                                 style={styles.input}
-                                placeholder="********************"
+                                placeholder={"Digite sua senha"}
                                 placeholderTextColor={'#B0B0B0'}
                                 textContentType={"password"}
-                                onChangeText={(txt) => setPasswd(txt)}
                                 secureTextEntry={hidePasswd}
+                                onChangeText={(txt) => setPasswd(txt)}
                             />
                             <TouchableOpacity style={styles.inputIcon} onPress={() => setHidePasswd(!hidePasswd)}>
                                 {hidePasswd ?
@@ -168,19 +171,27 @@ const styles = StyleSheet.create({
     },
     inputArea: {
         flexDirection: 'row',
-        width: '100%',
         alignItems: 'center',
-        backgroundColor: '#FAFAFA',
-        borderRadius: 50,
+
+        width: '100%',
         height: 48,
+
+        backgroundColor: '#FAFAFA',
         paddingHorizontal: 17,
         marginVertical: 10,
+
+        borderWidth: 0.4,
+        borderRadius: 50,
+        borderColor: '#E7E9EC',
     },
     input: {
         height: 48,
-        color: '#777',
-        fontSize: 20,
         width: '100%',
+
+        color: '#777',
+
+        fontSize: 20,
+        fontFamily: 'SourceSansPro_300Light',
     },
     inputIcon: {
         height: 48,

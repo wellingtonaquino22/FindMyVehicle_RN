@@ -20,6 +20,7 @@ export default function Home({navigation}) {
         SourceSansPro_700Bold, SourceSansPro_400Regular, SourceSansPro_300Light
     })
     const [region, setRegion] = useState(null)
+    const [address, setAddress] = useState(null)
     const [vehicleName, setVehicleName] = useState(null)
 
     useEffect(() => {
@@ -91,7 +92,7 @@ export default function Home({navigation}) {
                         color: '#192959',
                         fontFamily: 'SourceSansPro_400Regular',
                     }}
-                    onPress={() => {
+                    onPressIn={async () => {
                         setVehicleName('Toyota, Corolla - BRA2E19')
                         setRegion({
                             latitude: -8.109173,
@@ -99,9 +100,36 @@ export default function Home({navigation}) {
                             latitudeDelta: 0.0922,
                             longitudeDelta: 0.0421
                         })
+                        let address = await Location.reverseGeocodeAsync(
+                            {
+                                latitude: -8.109173,
+                                longitude: -35.287119
+                            }
+                        )
+
+                        setAddress({
+                            postalCode: address[0].postalCode,
+                            street: address[0].street,
+                            number: address[0].streetNumber,
+                            city: address[0].subregion,
+                            district: address[0].district,
+                            region: address[0].region
+                        })
                     }}
                     onPressOut={() => {
-                        sendData(region['latitude'], region['longitude'], vehicleName)
+                        let currentLocation = {
+                            vehicle: vehicleName,
+                            latitude: region['latitude'],
+                            longitude: region['longitude'],
+                            postalCode: address['postalCode'],
+                            street: address['street'],
+                            number: address['number'],
+                            city: address['city'],
+                            district: address['district'],
+                            region: address['region']
+                        }
+
+                        sendData(currentLocation)
                             .catch(error => console.log({"error": error}))
                     }}
                 />
@@ -112,7 +140,7 @@ export default function Home({navigation}) {
                         color: '#192959',
                         fontFamily: 'SourceSansPro_400Regular',
                     }}
-                    onPress={() => {
+                    onPressIn={async () => {
                         setVehicleName('CB Twister - BRC3TR1')
                         setRegion({
                             latitude: -8.1186496,
@@ -120,9 +148,37 @@ export default function Home({navigation}) {
                             latitudeDelta: 0.0922,
                             longitudeDelta: 0.0421
                         })
+
+                        let address = await Location.reverseGeocodeAsync(
+                            {
+                                latitude: -8.1186496,
+                                longitude: -35.2910706,
+                            }
+                        )
+
+                        setAddress({
+                            postalCode: address[0].postalCode,
+                            street: address[0].street,
+                            number: address[0].streetNumber,
+                            city: address[0].subregion,
+                            district: address[0].district,
+                            region: address[0].region
+                        })
                     }}
                     onPressOut={() => {
-                        sendData(region['latitude'], region['longitude'], vehicleName)
+                        let currentLocation = {
+                            vehicle: vehicleName,
+                            latitude: region['latitude'],
+                            longitude: region['longitude'],
+                            postalCode: address['postalCode'],
+                            street: address['street'],
+                            number: address['number'],
+                            city: address['city'],
+                            district: address['district'],
+                            region: address['region']
+                        }
+
+                        sendData(currentLocation)
                             .catch(error => console.log({"error": error}))
                     }}
                 />
@@ -153,7 +209,7 @@ export default function Home({navigation}) {
                         longitude: -35.287119,
                     }}
                     title={vehicleName}
-                    description='Descrição do local'
+                    description={address.street+", "+address.number+", "+address.district}
                     icon={{
                         uri: "https://img.icons8.com/plasticine/1x/car.png"
                     }}
@@ -165,7 +221,7 @@ export default function Home({navigation}) {
                     }}
                     focusable={true}
                     title={vehicleName}
-                    description='Descrição do local'
+                    description={address.street+", "+address.number+", "+address.district}
                     icon={{
                         uri: "https://img.icons8.com/plasticine/1x/car.png"
                     }}

@@ -1,17 +1,29 @@
-import {StyleSheet, Text, View} from "react-native";
+import {Image, StyleSheet, Text, View} from "react-native";
 import React from "react";
+import {useFonts} from "expo-font";
+import {SourceSansPro_700Bold} from "@expo-google-fonts/source-sans-pro";
 
-export default function InfoScreen1() {
+export default function InfoScreen2({navigation}) {
+
+    const [font] = useFonts({
+        SourceSansPro_700Bold
+    })
+
+    if (!font) {
+        return null
+    }
+
     return (
         <View style={styles.container}>
-            <Text>
-                Second info screen!
-            </Text>
-            <View style={styles.nav}>
-                <View style={styles.index}></View>
-                <View style={styles.index}></View>
-                <View style={[styles.index, {backgroundColor: '#192959'}]}></View>
+            <View style={styles.content}>
+                <Text style={styles.text}>
+                    Este ícone indica onde seu veículo está no mapa
+                </Text>
             </View>
+            <Image
+                source={require('../../../assets/car.png')}
+                style={styles.img}
+            />
         </View>
     )
 }
@@ -19,21 +31,24 @@ export default function InfoScreen1() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        justifyContent: 'center',
         alignItems: 'center',
-    },
-    nav: {
-        position: 'absolute',
-        top: "76%",
 
-        display: 'flex',
-        flexDirection: 'row'
+        backgroundColor: '#fff',
     },
-    index: {
-        marginHorizontal: 12,
-        width: 11,
-        height: 11,
+    content: {
+        width: 271,
+        marginBottom: 97
+    },
+    text: {
+        textAlign: 'center',
+        fontFamily: 'SourceSansPro_700Bold',
+        fontSize: 28,
 
-        borderRadius: 10,
-        backgroundColor: '#d9d9d9'
+        color: '#192959'
+    },
+    img: {
+        width: 215,
+        height: 215
     }
 })
